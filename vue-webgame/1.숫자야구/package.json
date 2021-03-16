@@ -1,0 +1,20 @@
+{
+  "name": "vue-webgame",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "author": "Heroyooi",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.6.12"
+  },
+  "devDependencies": {
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^5.26.0",
+    "webpack-cli": "^4.5.0"
+  }
+}
