@@ -66,6 +66,17 @@ npm run dev
   - created, mounted, updated, destroyed 가 있으며, 각각 이전에
   - beforeCreate, beforeMount, beforeUpdate, beforeDestroy 가 존재한다.
 
+### 4. 로또
+
+- 컴포넌트와 props
+- watch: watch는 되도록 안쓰는 것이 좋다. 최후의 수단으로 사용할 것
+- data나 props가 바뀌었을 때 computed, watch가 실행된다.
+  - computed는 새로운 값을 return 하고, watch는 특정 동작을 수행한다.
+
+### 링크
+
+[Vue 스타일 가이드](https://kr.vuejs.org/v2/style-guide/index.html)
+
 ### 강좌
 
-- 5-4
+- 7-1
