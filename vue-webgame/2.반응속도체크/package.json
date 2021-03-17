@@ -1,0 +1,24 @@
+{
+  "name": "vue-webgame",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --watch",
+    "dev": "webpack serve --hot --env development"
+  },
+  "author": "Heroyooi",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.6.12"
+  },
+  "devDependencies": {
+    "css-loader": "^5.1.3",
+    "vue-loader": "^15.9.6",
+    "vue-style-loader": "^4.1.3",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^5.26.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}

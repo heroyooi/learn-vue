@@ -48,6 +48,24 @@ npm run dev
   - 만약 template 안에 계산되는 부분을 그대로 두면 다른 데이터가 바뀌었을 때 계산되는 부분이 다시 실행된다. 그래서 성능의 저하를 가져다 준다.
   - computed를 쓰면 계산하는 값이 캐싱이 되기 때문에 성능 최적화에 도움이 된다.
 
+### 3. 가위바위보
+
+```Vue
+<template>
+  <div id="computer" :class="{ state: true, hello: false }" :style="{ backgroundImage: '', fontSize: '14px' }"></div>
+</template>
+```
+
+- class와 style은 위와 같이 객체를 지원한다.
+
+- 라이프사이클에 대한 설명
+
+  - created: 보여지기는 하지만 화면에 나타나기 전, 데이터들이 다 준비되면 자바스크립트 상에서만 존재
+  - mounted: 화면에 나타난 후
+
+  - created, mounted, updated, destroyed 가 있으며, 각각 이전에
+  - beforeCreate, beforeMount, beforeUpdate, beforeDestroy 가 존재한다.
+
 ### 강좌
 
-- 4-5 4:20
+- 5-4
