@@ -205,10 +205,69 @@ export default new Vuex.Store({
 
 - 스토어를 만들어준다. 뷰엑스는 스토어를 여러개 만들어도 된다. (리덕스는 스토어를 하나만 만들어야한다.)
 
+- TicTacToe.vue
+
+```Vue
+<script>
+import { mapState } from 'vuex';
+import store from './store';
+
+export default {
+  store,
+  data() {
+    return {
+      data: 1,
+    }
+  },
+  computed: {
+    // 스토어의 state를 부르는 방식
+    // 1
+    ...mapState(['winner', 'turn']),
+
+    // 2
+    ...mapState({
+      winner(state) {
+        return state.winner + this.data;
+      },
+      winner: state => state.winner,
+      turnState: 'turn',
+    }),
+
+    // 3
+    winner() {
+      return this.$store.state.winner;
+    },
+    turn() {
+      return this.$store.state.turn;
+    },
+  }
+}
+</script>
+```
+
+- 최상단 컴포넌트에서 스토어를 연결하고, state를 불러온다.
+
+```Vue
+<script>
+export default {
+  methods: {
+    onClickTd() {
+      this.$store.commit(SET_WINNER, this.turn);
+    }
+  }
+}
+</script>
+```
+
+- 다음과 같이 뮤테이션을 실행시킨다.
+- actions 같은 경우 this.$store.dispatch로 실행
+
+- slot을 사용하면 자식 컴포넌트에 있는 요소에 부모 컴포넌트에서 이벤트를 걸어줄 수 있다.
+
 ### 링크
 
 [Vue 스타일 가이드](https://kr.vuejs.org/v2/style-guide/index.html)
 
 ### 강좌
 
-- 7-7
+- 8-1
