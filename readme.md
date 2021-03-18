@@ -73,10 +73,57 @@ npm run dev
 - data나 props가 바뀌었을 때 computed, watch가 실행된다.
   - computed는 새로운 값을 return 하고, watch는 특정 동작을 수행한다.
 
+### 5. 틱택토
+
+- Vue는 React와 다르게 하위 컴포넌트에서 부모 컴포넌트와, 최상위 컴포넌트의 데이터에 접근할 수 있다. 그리고 데이터 조작도 할 수 있다.
+
+```Vue
+<template>
+  <td @click="onClickTd">{{ cellData }}</td>
+</template>
+
+<script>
+export default {
+  props: {
+    cellData: String,
+    rowIndex: Number,
+    cellIndex: Number,
+    turn: String,
+  },
+  methods: {
+    onClickTd() {
+      console.log(this.$root.$data); // 최상위 컴포넌트의 데이터
+      console.log(this.$parent.$data); // 부모 컴포넌트의 데이터
+      this.$root.$data.turn = this.$root.$data.turn === 'O' ? 'X' : 'O'; // 최상위 컴포넌트의 데이터 조작
+    },
+  },
+};
+</script>
+```
+
+- 배열의 index를 사용해서 데이터를 바꾸는 경우 화면에 반영이 안된다.
+
+```Vue
+<script>
+import Vue from 'vue';
+
+export default {
+  methods: {
+    onChangeData() {
+      this.turn = 'X';
+      this.tableData[0][1] = 'O'; // X, 작동하지 않음
+      Vue.set(this.tableData[1], 0, 'X');
+      this.$set(this.tableData[1], 0, 'X'); // Vue.set과 동일
+    },
+  },
+}
+</script>
+```
+
 ### 링크
 
 [Vue 스타일 가이드](https://kr.vuejs.org/v2/style-guide/index.html)
 
 ### 강좌
 
-- 7-1
+- 7-4
