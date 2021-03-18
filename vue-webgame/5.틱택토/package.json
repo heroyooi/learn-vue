@@ -10,8 +10,7 @@
   "author": "Heroyooi",
   "license": "MIT",
   "dependencies": {
-    "vue": "^2.6.12",
-    "vuex": "^3.6.2"
+    "vue": "^2.6.12"
   },
   "devDependencies": {
     "css-loader": "^5.1.3",

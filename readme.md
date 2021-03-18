@@ -120,10 +120,95 @@ export default {
 </script>
 ```
 
+- Vue.set 혹은 this.$set을 사용해서 배열의 내부 값을 바꿔줘야 화면에 반영된다.
+
+### 5. 틱택토EventBus
+
+- EventBus.js 파일 작성
+
+```JS
+import Vue from 'vue';
+
+export default new Vue(); // 뷰 인스턴스
+```
+
+- 이렇게 비어있는 뷰 인스턴스를 만든다.
+
+- TicTacToe.vue
+
+```Vue
+<script>
+import EventBus from './EventBus';
+export default {
+  created() {
+    EventBus.$on('clickTd', this.onClickTd); // EventBus 등록
+  },
+}
+</script>
+```
+
+- 최상단 컴포넌트에서 EventBus의 이벤트를 등록해준다.
+
+- TdComponent.vue
+
+```Vue
+<script>
+import EventBus from './EventBus';
+export default {
+  methods: {
+    onClickTd() {
+      EventBus.$emit('clickTd'); // EventBus 등록되어있는 특정 이벤트 사용
+    },
+  },
+}
+</script>
+```
+
+- 이벤트를 사용하는 컴포넌트에서 해당 이벤트를 호출한다.
+
+- 장단점
+  - 중앙 컴포넌트에서 이벤트를 다 관리할 수 있다.
+  - 중앙 컴포넌트 내용이 무수히 길어진다.
+
+## 5. 틱택토Vuex
+
+- vuex를 설치한다.
+
+```command
+npm i vuex
+```
+
+- store.js 파일 작성
+
+```JS
+import Vue from 'vue';
+import Vuex from 'vuex';
+
+Vue.use(Vuex);
+
+export const SET_WINNER = 'SET_WINNER';
+
+export default new Vuex.Store({
+  state: {
+    winner: '',
+  }, // vue의 data와 비슷
+  getters: {}, // vue의 computed와 비슷
+  mutations: {
+    [SET_WINNER](state, winner) {
+      state.winner = winner;
+    },
+  }, // state를 수정할 때 사용. 동기적으로
+  actions: {}, // 비동기를 사용할 때, 또는 여러 뮤테이션을 연달아 실행할 때
+});
+
+```
+
+- 스토어를 만들어준다. 뷰엑스는 스토어를 여러개 만들어도 된다. (리덕스는 스토어를 하나만 만들어야한다.)
+
 ### 링크
 
 [Vue 스타일 가이드](https://kr.vuejs.org/v2/style-guide/index.html)
 
 ### 강좌
 
-- 7-4
+- 7-7
