@@ -297,10 +297,36 @@ export default {
 </script>
 ```
 
+- watch 사용 예제
+
+```Vue
+<script>
+export default {
+  store,
+  computed: {
+    ...mapState(['timer', 'result', 'halted']),
+  },
+  watch: {
+    halted(value, oldValue) {
+      if (value === false) {
+        // false일 때 게임 시작
+        interval = setInterval(() => {
+          this.$store.commit(INCREMENT_TIMER);
+        }, 1000);
+      } else {
+        // 게임 중단
+        clearInterval(interval);
+      }
+    },
+  },
+};
+</script>
+```
+
 ### 링크
 
 [Vue 스타일 가이드](https://kr.vuejs.org/v2/style-guide/index.html)
 
 ### 강좌
 
-- 8-4
+- 8-6. 지뢰 밟기와 주변 지뢰 개수 찾기

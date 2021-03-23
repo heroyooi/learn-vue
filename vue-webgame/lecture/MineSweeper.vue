@@ -14,6 +14,7 @@ import store, { INCREMENT_TIMER } from './store';
 import TableComponent from './TableComponent';
 import MineForm from './MineForm';
 
+let interval;
 export default {
   store,
   components: {
