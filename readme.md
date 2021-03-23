@@ -264,10 +264,43 @@ export default {
 
 - slot을 사용하면 자식 컴포넌트에 있는 요소에 부모 컴포넌트에서 이벤트를 걸어줄 수 있다.
 
+## 6. 지뢰찾기
+
+- 고차 함수로 기존 함수를 확장
+  - 화살표 함수 내부에선 this를 사용할 수 없으므로 일반 함수로 작업
+
+```Vue
+<script>
+export default {
+  computed: {
+    ...mapState(['tableData']),
+    cellDataStyle(state) {
+      return function(row, cell) {
+        switch (this.$store.state.tableData[row][cell]) {
+          case CODE.NORMAL:
+          case CODE.MINE:
+            return {
+              background: '#444',
+            };
+          case CODE.CLICKED_MINE:
+          case CODE.OPENED:
+            return {
+              background: '#fff',
+            };
+          default:
+            return {};
+        }
+      };
+    },
+  }
+}
+</script>
+```
+
 ### 링크
 
 [Vue 스타일 가이드](https://kr.vuejs.org/v2/style-guide/index.html)
 
 ### 강좌
 
-- 8-1
+- 8-4
