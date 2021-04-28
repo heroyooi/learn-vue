@@ -119,6 +119,93 @@ npm i -D eslint eslint-plugin-vue
 eslint **/*
 ```
 
+- IDE eslint 관련 자동 저장 설정
+
+```json (settings.json)
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
+}
+```
+
+## 2-3. 로그인 회원가입 더미 데이터
+
+- Vuex를 활용한 로그인, 로그아웃 예제
+
+```js (store/users.js)
+export const state = () => ({
+  me: null,
+});
+
+export const mutations = {
+  setMe(state, payload) {
+    state.me = payload;
+  },
+};
+
+export const actions = {
+  signUp({ commit, dispatch, state, rootState, getters, rootGetters }, payload) {
+    // 서버에 회원가입 요청을 보내는 부분
+    commit('setMe', payload);
+  },
+  logIn({ commit }, payload) {
+    commit('setMe', payload);
+  },
+  logOut({ commit }, payload) {
+    commit('setMe', null);
+  },
+}
+```
+- actions의 rootState, rootGetters는 index 모듈의 state, getters이다.
+
+```vue (components/LoginForm.vue)
+<template>
+  <v-container v-if="!me">
+    <v-card>
+      <v-form @submit.prevent="onSubmitForm">
+        <v-btn type="submit">로그인</v-btn>
+      </v-form>
+    </v-card>
+  </v-container>
+  <v-container v-else>
+    <v-card>
+      {{ me.nickname }}님 로그인 되었습니다.
+      <v-btn @click="onLogOut">로그아웃</v-btn>
+    </v-card>
+  </v-container>
+</template>
+
+<script>
+export default {
+  computed: {
+    me() {
+      return this.$store.state.users.me;
+    }
+  }
+  methods: {
+    onSubmitForm() {
+      this.$store.dispatch('users/logIn', {
+        nickname: this.nickname,
+        email: this.email
+      })
+        .then(() => {
+          this.$router.push({
+            path: '/',
+          });
+        })
+        .catch(() => {
+          alert('로그인 실패');
+        });
+    },
+    onLogOut() {
+      this.$store.dispatch('users/logOut');
+    }
+  },
+}
+</script>
+```
+
 ## 참고 문서
 
 - [Vue.js 공식문서](https://kr.vuejs.org)
@@ -127,4 +214,4 @@ eslint **/*
 
 ## 듣던 강좌
 
-2-1
+2-4

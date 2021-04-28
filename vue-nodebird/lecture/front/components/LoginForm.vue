@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container v-if="!me">
     <v-card>
       <v-form
         ref="form"
@@ -38,6 +38,12 @@
       </v-form>
     </v-card>
   </v-container>
+  <v-container v-else>
+    <v-card>
+      {{ me.nickname }}님 로그인 되었습니다.
+      <v-btn @click="onLogOut">로그아웃</v-btn>
+    </v-card>
+  </v-container>
 </template>
 
 <script>
@@ -51,11 +57,23 @@ export default {
       passwordRules: [v => !!v || '비밀번호는 필수입니다.'],
     };
   },
+  computed: {
+    me() {
+      return this.$store.state.users.me;
+    }
+  },
   methods: {
     onSubmitForm() {
       if (this.$refs.form.validate()) {
+        this.$store.dispatch('users/logIn', {
+          email: this.email,
+          nickname: '히어로',
+        });
       }
     },
+    onLogOut() {
+      this.$store.dispatch('users/logOut');
+    }
   },
 };
 </script>
