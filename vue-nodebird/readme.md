@@ -206,6 +206,48 @@ export default {
 </script>
 ```
 
+## 2-4. 게시글 작성 폼 만들기
+
+- 일반적으로 모듈 내에서 mutations를 실행 시킬 때
+```js (store/posts.js)
+export const actions = {
+  add({ commit }, payload) {
+    commit('addMainPost', payload);
+  }
+};
+```
+
+- 만약 스토어 모듈에서 mutations를 실행시킬 때, index의 mutations를 실행시키고 싶으면
+```js (store/posts.js)
+export const actions = {
+  add({ commit }, payload) {
+    commit('addMainPost', payload, { root: true });
+  }
+};
+```
+
+- 컴포넌트나 페이지에서 vuex의 값을 가져올 때
+```vue
+<script>
+import { mapState } from 'vuex';
+
+export default {
+  computed: {
+    // 1
+    ...mapState('users', ['me']),
+
+    // 2
+    ...mapState(['users/me']),
+
+    // 3
+    me() {
+      return this.$store.state.users.me;
+    }
+  },
+}
+</script>
+```
+
 ## 참고 문서
 
 - [Vue.js 공식문서](https://kr.vuejs.org)
@@ -214,4 +256,4 @@ export default {
 
 ## 듣던 강좌
 
-2-4
+2-6
