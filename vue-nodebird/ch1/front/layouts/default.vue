@@ -5,9 +5,9 @@
         dark
         color="green"
       >
-        <v-toobar-title>
+        <v-toolbar-title>
           <nuxt-link to="/">Nodebird</nuxt-link>
-        </v-toobar-title>
+        </v-toolbar-title>
         <v-spacer />
         <v-toolbar-items>
           <v-text-field
