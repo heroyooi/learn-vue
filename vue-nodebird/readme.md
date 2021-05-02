@@ -11,7 +11,7 @@ npm i vue nuxt
 - layouts 폴더 안에 default.vue, admin.vue가 있다고 가정하자.
 
 ```vue
-<script>
+<scrip>
 export default {
   layout: 'admin', // 기본적으로 default.vue를 따라가는데 여기선 admin.vue를 따라간다.
   data() {
@@ -25,7 +25,7 @@ export default {
     };
   },
 };
-</script>
+</scrip>
 ```
 
 - 만약 페이지 head가 없으면 layouts/default.vue의 head를 사용한다.
@@ -75,7 +75,7 @@ module.exports = {
   <follow-list />
 </template>
 
-<script>
+<scrip>
 import FollowList from '~/components/FollowList';
 
 export default {
@@ -83,7 +83,7 @@ export default {
     FollowList,
   },
 };
-</script>
+</scrip>
 ```
 
 ## 1-9. eslint 도입하기
@@ -111,10 +111,11 @@ npm i -D eslint eslint-plugin-vue
   }
 }
 ```
+
 - rules에서 예외 규칙들을 off 해주면 된다.
 
-
 - 터미널에서 lint 확인
+
 ```
 eslint **/*
 ```
@@ -155,8 +156,9 @@ export const actions = {
   logOut({ commit }, payload) {
     commit('setMe', null);
   },
-}
+};
 ```
+
 - actions의 rootState, rootGetters는 index 모듈의 state, getters이다.
 
 ```vue (components/LoginForm.vue)
@@ -176,7 +178,7 @@ export const actions = {
   </v-container>
 </template>
 
-<script>
+<scrip>
 export default {
   computed: {
     me() {
@@ -203,30 +205,33 @@ export default {
     }
   },
 }
-</script>
+</scrip>
 ```
 
 ## 2-4. 게시글 작성 폼 만들기
 
 - 일반적으로 모듈 내에서 mutations를 실행 시킬 때
+
 ```js (store/posts.js)
 export const actions = {
   add({ commit }, payload) {
     commit('addMainPost', payload);
-  }
+  },
 };
 ```
 
 - 만약 스토어 모듈에서 mutations를 실행시킬 때, index의 mutations를 실행시키고 싶으면
+
 ```js (store/posts.js)
 export const actions = {
   add({ commit }, payload) {
     commit('addMainPost', payload, { root: true });
-  }
+  },
 };
 ```
 
 - 컴포넌트나 페이지에서 vuex의 값을 가져올 때
+
 ```vue
 <script>
 import { mapState } from 'vuex';
@@ -242,6 +247,145 @@ export default {
     // 3
     me() {
       return this.$store.state.users.me;
+    },
+  },
+};
+</script>
+```
+
+### 3-1. 팔로워 팔로잉 더미 데이터
+
+- 3강 부턴 프론트엔드 개발에 필요한 다양한 것들 학습
+
+- 팔로워, 팔로잉 구현
+
+- 스토어에 필요한 state, mutations, actions 정의
+
+```js (store/user.js)
+export const state = () => ({
+  followerList: [{id: 1, nickname: '히어로'}],
+});
+export const mutations = {
+  addFollower(state, payload) {
+    state.followerList.push(payload);
+  },
+  removeFollower(state, payload) {
+    const index = state.followerList.findIndex((v) => v.id === payload.id);
+    state.followerList.splice(index, 1);
+  },
+};
+export const actions = {
+  addFollower({ commit }, payload) {
+    commit('addFollower', payload);
+  },
+  removeFollower({ commit }, payload) {
+    // 비동기 요청
+    commit('removeFollower', payload);
+  },
+}
+```
+
+- 페이지 컴포넌트에서 해당 스토어 state 및 액션 dispatch
+
+```vue (pages/profile.vue)
+<template>
+  <div>
+    <follow-list
+      :users="followerList"
+      :remove="removeFollower"
+    />
+  </div>
+</template>
+
+<script>
+import FollowList from '~/components/FollowList';
+export default {
+  components: {
+    FollowList,
+  },
+  computed: {
+    followerList() {
+      return this.$store.state.users.followerList;
+    },
+  },
+  methods: {
+    removeFollower(id) {
+      this.$store.dispatch('users/removeFollower', { id });
+    }
+  },
+}
+</script>
+```
+
+```vue (components/FollowList/vue)
+<template>
+  <ul>
+    <li v-for="user in users" :key="user.id">
+      <span>{{ user.nickname }}</span>
+      <v-icon @click="remove(user.id)">mdi-minus-circle-outline</v-icon>
+    </li>
+  </ul>
+</template>
+
+<script>
+export default {
+  props: {
+    users: {
+      type: Array,
+      required: true,
+    },
+    remove: {
+      type: Function,
+      required: true,
+    }
+  },
+};
+</script>
+```
+
+### 3-2. 라우팅 미들웨어
+
+- 로그아웃 되어있는데 프로필 페이지에 접근하는 경우
+- 미들웨어를 만들어줘야하는데 middleware라는 폴더를 생성해준다.
+
+- 로그인 안된 사용자면 메인으로 보내는 미들웨어
+```js (middleware/authenticated.js)
+export default function({ store, redirect }) {
+  if (!store.state.users.me) {
+    redirect('/');
+  }
+}
+```
+- 함수의 매개변수에는 context가 들어간다. context를 구조분해해서 store, redirect를 받을 수 있다.
+
+```vue (profile.vue)
+<script>
+export default {
+  middleware: 'authenticated',
+}
+</script>
+```
+- 사용할 페이지에서 middleware 연결
+
+#### watch 사용 예
+
+- 회원가입 페이지에서 로그인하는 경우 자동으로 메인페이지로 가도록
+
+```vue (pages/signup.vue)
+<script>
+export default {
+  computed: {
+    me() {
+      return this.$store.state.users.me;
+    }
+  },
+  watch: {
+    me(value, oldValue) {
+      if (value) {
+        this.$router.push({
+          path: '/',
+        });
+      }
     }
   },
 }
@@ -256,4 +400,4 @@ export default {
 
 ## 듣던 강좌
 
-3-1
+3-2
