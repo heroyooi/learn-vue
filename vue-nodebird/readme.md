@@ -392,12 +392,28 @@ export default {
 </script>
 ```
 
+### 3-3. 동적 라우트
+
+- pages/post/_id/index.vue
+```vue
+<script>
+export default {
+  computed: {
+    post() {
+      return this.$store.state.posts.mainPosts.find(v => v.id === parseInt(this.$route.params.id, 10));
+    }
+  }
+}
+</script>
+```
+
 ## 참고 문서
 
 - [Vue.js 공식문서](https://kr.vuejs.org)
 - [Nuxt.js 공식문서](https://ko.nuxtjs.org)
 - [Vuetify 공식문서](https://v2.vuetifyjs.com/ko)
+- [vue-virtual-scroll-list](https://github.com/tangbc/vue-virtual-scroll-list)
 
 ## 듣던 강좌
 
-3-2
+3-7
