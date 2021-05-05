@@ -50,7 +50,7 @@ npm i axios @nuxtjs/axios
 module.exports = {
   // ...
   modules: ['@nuxtjs/axios'],
-  devModules: ['@nuxtjs/vuetify'],
+  buildModules: ['@nuxtjs/vuetify'],
 };
 ```
 
@@ -263,7 +263,7 @@ export default {
 
 ```js (store/user.js)
 export const state = () => ({
-  followerList: [{id: 1, nickname: '히어로'}],
+  followerList: [{ id: 1, nickname: '히어로' }],
 });
 export const mutations = {
   addFollower(state, payload) {
@@ -282,7 +282,7 @@ export const actions = {
     // 비동기 요청
     commit('removeFollower', payload);
   },
-}
+};
 ```
 
 - 페이지 컴포넌트에서 해당 스토어 state 및 액션 dispatch
@@ -290,10 +290,7 @@ export const actions = {
 ```vue (pages/profile.vue)
 <template>
   <div>
-    <follow-list
-      :users="followerList"
-      :remove="removeFollower"
-    />
+    <follow-list :users="followerList" :remove="removeFollower" />
   </div>
 </template>
 
@@ -311,9 +308,9 @@ export default {
   methods: {
     removeFollower(id) {
       this.$store.dispatch('users/removeFollower', { id });
-    }
+    },
   },
-}
+};
 </script>
 ```
 
@@ -337,7 +334,7 @@ export default {
     remove: {
       type: Function,
       required: true,
-    }
+    },
   },
 };
 </script>
@@ -349,22 +346,25 @@ export default {
 - 미들웨어를 만들어줘야하는데 middleware라는 폴더를 생성해준다.
 
 - 로그인 안된 사용자면 메인으로 보내는 미들웨어
+
 ```js (middleware/authenticated.js)
-export default function({ store, redirect }) {
+export default function ({ store, redirect }) {
   if (!store.state.users.me) {
     redirect('/');
   }
 }
 ```
+
 - 함수의 매개변수에는 context가 들어간다. context를 구조분해해서 store, redirect를 받을 수 있다.
 
 ```vue (profile.vue)
 <script>
 export default {
   middleware: 'authenticated',
-}
+};
 </script>
 ```
+
 - 사용할 페이지에서 middleware 연결
 
 #### watch 사용 예
@@ -377,7 +377,7 @@ export default {
   computed: {
     me() {
       return this.$store.state.users.me;
-    }
+    },
   },
   watch: {
     me(value, oldValue) {
@@ -386,26 +386,83 @@ export default {
           path: '/',
         });
       }
-    }
+    },
   },
-}
+};
 </script>
 ```
 
 ### 3-3. 동적 라우트
 
-- pages/post/_id/index.vue
+- pages/post/\_id/index.vue
+
 ```vue
 <script>
 export default {
   computed: {
     post() {
-      return this.$store.state.posts.mainPosts.find(v => v.id === parseInt(this.$route.params.id, 10));
-    }
-  }
-}
+      return this.$store.state.posts.mainPosts.find((v) => v.id === parseInt(this.$route.params.id, 10));
+    },
+  },
+};
 </script>
 ```
+
+### 4-1. 백엔드 코딩 준비하기
+
+```command
+npm init
+npm i express
+```
+
+- [MySQL Community 다운로드](https://dev.mysql.com/downloads/installer/)
+
+### 4-2. 백엔드 기본 개념 이해하기
+
+- 프론트는 JavaScript, 백엔드는 언어(JavaScript, 파이썬, 자바 등등)가 다양하다.
+- 언어가 다를 수 있기 때문에 요청과 응답은 하나의 규약으로 어떻게 보내야한다고 정의되어있음(HTTP)
+
+- REQ(요청)
+
+  - GET naver.com/user/1
+  - header: 요청에 대한 데이터
+  - body: 헤더에 못담는 데이터를 바디에 담는다.
+
+- RES(응답) - 서버의 결과
+
+  - 200(성공) / 400(거절) / 500(에러)
+  - header
+  - body: data
+
+- HTTP 메서드
+
+  - GET: 가져오다
+  - POST: 생성하다
+  - PUT: 전체 수정
+  - PATCH: 부분 수정
+  - DELETE: 삭제
+  - OPTIONS: 찔러보기
+
+- https://www.naver.com:443
+  - https 암호화가 적용된 http 약속대로 요청을 보낸다.
+  - 포트 443가 숨어있다.(http는 80)
+
+### 4-3. 시퀄라이즈 도입하기
+
+```command
+npm i sequelize mysql2
+npm i -D sequelize-cli
+```
+
+- sequelize: SQL를 자바스크립트로 표현할 수 있음.
+  - mysql, postgre, maria, mssql 등 DB에 상관없이 같은 자바스크립트로 SQL를 표현할 수 있음
+- mysql2: 노드와 mysql를 연결해주는 드라이버
+
+```command
+npx sequelize init
+```
+
+- 시퀄라이즈 초기화
 
 ## 참고 문서
 
@@ -416,4 +473,4 @@ export default {
 
 ## 듣던 강좌
 
-4-1
+4-4
