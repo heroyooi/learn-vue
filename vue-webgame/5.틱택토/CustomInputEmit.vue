@@ -11,10 +11,6 @@ export default {
       type: String,
       required: true,
     },
-    customOnInput: {
-      type: Function,
-      required: false,
-    },
   },
   data() {
     return {
