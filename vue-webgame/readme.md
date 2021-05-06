@@ -120,6 +120,12 @@ export default {
 
 - Vue.set 혹은 this.$set을 사용해서 배열의 내부 값을 바꿔줘야 화면에 반영된다.
 
+### ETC
+
+- 자식에서 부모로 데이터 보내는 예제 추가
+  - CustomInput: EventHandler 사용
+  - CustomInputEmit: $emit 사용
+
 ## 5. 틱택토EventBus
 
 - EventBus.js 파일 작성
