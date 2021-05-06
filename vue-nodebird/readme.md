@@ -437,7 +437,7 @@ npm i express
 - HTTP 메서드
 
   - GET: 가져오다
-  - POST: 생성하다
+  - POST: 생성하다 (애매할 때 많이 사용한다.)
   - PUT: 전체 수정
   - PATCH: 부분 수정
   - DELETE: 삭제
@@ -464,6 +464,31 @@ npx sequelize init
 
 - 시퀄라이즈 초기화
 
+### 4-4. 서버로 데이터 보내기
+
+```command
+npm i -D nodemon
+```
+
+### 4-5. 시퀄라이즈 모델과 회원가입
+
+- DB에서의 테이블이 시퀄라이즈에서는 모델이다.
+
+- DB(SCHEMA) 생성
+
+```command
+npx sequelize db:create
+```
+
+### 4-6. CORS와 bcrypt
+
+- 프론트 서버에서 백엔드 서버로 요청을 보낼 경우 서버가 다를 경우 ajax 요청을 차단한다.
+- 백엔드 서버에서 허용이 필요하다.
+
+```command
+npm i cors bcrypt
+```
+
 ## 참고 문서
 
 - [Vue.js 공식문서](https://kr.vuejs.org)
@@ -473,4 +498,4 @@ npx sequelize init
 
 ## 듣던 강좌
 
-4-4
+4-7
