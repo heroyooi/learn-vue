@@ -430,7 +430,7 @@ npm i express
 
 - RES(응답) - 서버의 결과
 
-  - 200(성공) / 400(거절) / 500(에러)
+  - 200(성공) / 400(잘못된 요청) / 500(에러)
   - header
   - body: data
 
@@ -489,6 +489,51 @@ npx sequelize db:create
 npm i cors bcrypt
 ```
 
+### 4-8. 로그인 개념 이해하기
+
+```command
+npm i passport passport-local
+npm i express-session
+npm i cookie-parser
+npm i morgan
+```
+
+```js
+const user = {
+  'f1324af4': {
+    nickname: '히어로',
+    email: 'heroyooi@naver.com',
+  },
+  '20gfg244': {
+    nickname: '제로초'
+    email: 'zerocho@naver.com',
+  },
+  'sfsrf230': {
+    nickname: '네로',
+    email: 'nero@naver.com',
+  }
+}
+```
+
+- 위와 같에 세션에 정보를 저장한다.
+- 프론트에서 'f1324af4'키(쿠키)를 같이 백엔드로 보내주면,
+- 백엔드에서는 express-session의 session에서 해당 키 'f1324af4'를 찾는다.
+- 쿠키(connect.sid)를 기반으로 사용자가 누구인지를 찾는다.
+
+```js
+app.post('/user/login', (req, res) => {
+  req.body.email;
+  req.body.password;
+  // email이랑 password 검사
+  db.User.findOne();
+  // 세션에 저장
+  user[cookie] = 유저정보;
+  // 프론트에 쿠키 내려보내주기
+});
+```
+
+- 하지만 위와같은 로그인 과정이 복잡하다. 그래서 passport같은 모듈을 사용한다.
+
 ## 참고 문서
 
 - [Vue.js 공식문서](https://kr.vuejs.org)
@@ -498,4 +543,4 @@ npm i cors bcrypt
 
 ## 듣던 강좌
 
-4-7
+4-9
