@@ -37,7 +37,9 @@ app.post('/user', async (req, res, next) => {
   try {
     const hash = await bcrypt.hash(req.body.password, 12);
     const exUser = await db.User.findOne({
-      email: req.body.email,
+      where: {
+        email: req.body.email,
+      },
     });
     if (exUser) {
       // 이미 회원가입 되어있으면
@@ -58,12 +60,24 @@ app.post('/user', async (req, res, next) => {
   }
 });
 
-app.post('/user/login', (req, res) => {
-  // email이랑 password 검사
-  db.User.findOne();
-  // 세션에 저장
-  user[cookie] = 유저정보;
-  // 프론트에 쿠키 내려보내주기
+app.post('/user/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      console.error(err);
+      return next(err);
+    }
+    if (info) {
+      return res.status(401).send(info.reason);
+    }
+    return req.login(user, async (err) => {
+      // 세션에다 사용자 정보 저장 (어떻게? serializeUser)
+      if (err) {
+        console.error(err);
+        return next(err);
+      }
+      return res.json(user);
+    });
+  })(req, res, next);
 });
 
 app.listen(3085, () => {
