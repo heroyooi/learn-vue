@@ -9,6 +9,21 @@
 
     <!-- $emit -->
     <custom-input-emit placeholder="커스텀 인풋 emit" @cinput="customOnInputEmit" />
+
+    <ul>
+      <li>
+        <dl>
+          <dt @click="onToggle(0)">토글 테스트 제목1</dt>
+          <dd v-if="toggle[0]">토글 테스트 내용1</dd>
+        </dl>
+      </li>
+      <li>
+        <dl>
+          <dt @click="onToggle(1)">토글 테스트 제목2</dt>
+          <dd v-if="toggle[1]">토글 테스트 내용2</dd>
+        </dl>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -32,6 +47,7 @@ export default {
       ],
       turn: 'O',
       winner: '',
+      toggle: [true, true],
     };
   },
   methods: {
@@ -44,6 +60,13 @@ export default {
     },
     customOnInputEmit(state) {
       console.log('자식 컴포넌트에서 보낸 값 : ', state);
+    },
+    onToggle(num) {
+      if (this.toggle[num]) {
+        this.$set(this.toggle, num, false);
+      } else {
+        this.$set(this.toggle, num, true);
+      }
     },
   },
 };
