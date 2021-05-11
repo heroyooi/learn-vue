@@ -23,6 +23,12 @@
           <dd v-if="toggle[1]">토글 테스트 내용2</dd>
         </dl>
       </li>
+      <li>
+        <dl>
+          <dt @click="onToggle(3)">토글 테스트 제목3</dt>
+          <dd v-if="toggle[3]">토글 테스트 내용3</dd>
+        </dl>
+      </li>
     </ul>
   </div>
 </template>
@@ -47,12 +53,12 @@ export default {
       ],
       turn: 'O',
       winner: '',
-      toggle: [true, true],
+      toggle: [true, true, false],
     };
   },
   methods: {
     onChangeData() {
-      // this.tableData[1][0]] = 'X'; 작동하지 않음
+      // this.tableData[1][0] = 'X'; 작동하지 않음
       this.$set(this.tableData[1], 0, 'X'); // Vue.set과 동일
     },
     customOnInput(state) {
@@ -62,11 +68,9 @@ export default {
       console.log('자식 컴포넌트에서 보낸 값 : ', state);
     },
     onToggle(num) {
-      if (this.toggle[num]) {
-        this.$set(this.toggle, num, false);
-      } else {
-        this.$set(this.toggle, num, true);
-      }
+      // this.toggle[num] = !this.toggle[num]; 작동하지 않음
+      console.log(this);
+      this.$set(this.toggle, num, !this.toggle[num]);
     },
   },
 };
