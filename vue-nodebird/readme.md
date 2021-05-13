@@ -534,6 +534,93 @@ app.post('/user/login', (req, res) => {
 
 - 하지만 위와같은 로그인 과정이 복잡하다. 그래서 passport같은 모듈을 사용한다.
 
+### 시퀄라이즈 모델 정의
+
+```js
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define(
+    'User',
+    {
+      email: {
+        type: DataTypes.STRING(40), // 30자 이내
+        allowNull: false, // 필수
+        unique: true, // 중복금지
+      },
+      nickname: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      // id, createdAt, updatedAt 자동으로 생성
+    },
+    {
+      charset: 'utf8',
+      collate: 'utf8_general_ci', // 한글 저장돼요
+    },
+  );
+
+  return User;
+};
+```
+
+### 4-12. 1대다 관계 알아보기
+
+- 사용자(1명)는 여러 게시글을 쓸 수 있다. (hasMany)
+- 게시글은 사용자에 속해있다. (belongsTo)
+- 게시글은 여러 댓글을 가지고 있다.
+
+```js
+User.associate = (db) => {
+  db.User.hasMany(db.Post);
+};
+
+Post.associate = (db) => {
+  db.Post.belongsTo(db.User); // UserId가 생성 된다.
+  db.Post.hasMany(db.Comment);
+};
+```
+
+- belongsTo : 사람(User)을 통해서 게시글(Post)을 불러온다.
+- hasMany : 게시글(Post)을 통해 댓글(Comment)을 불러온다.
+
+#### 관계의 종류
+
+- 1:1 (hasOne, belongsTo)
+- 1:다 (hasMany, belongsTo)
+- 다:다 (belongsToMany)
+
+#### 이미지 저장
+
+- 보통 이미지를 db에 넣지 않고, 이미지 저장용 서버를 따로 두고 거기에 저장한다.
+- 이미지 저장용 서버에 저장된 주소를 db에 저장한다.
+
+- 파일 스토리지에 저장
+
+  - 이미지는 왠만하면 저장하고 삭제하지 않는다.
+  - cdn 붙여서 캐싱할 수 있도록 해준다.
+
+- 이미지는 용량이 커서 db에 무리를 많이 줄 수 있다.
+
+### 4-13. 다대다 관계 알아보기
+
+- 하나의 해쉬태그가 여러개의 게시글을 가질 수 있고, 하나의 게시글이 여러개의 해쉬태그를 가질 수 있다.
+
+```js
+Hashtag.associate = (db) => {
+  db.Hashtag.belongsToMany(db.Post, { through: 'PostHashtag' });
+};
+
+Post.associate = (db) => {
+  db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag' });
+};
+```
+
+- belongsToMany를 하면 중간테이블이 생성된다.
+- through로 중간테이블명을 지정해줄 수 있다.
+
 ## 참고 문서
 
 - [Vue.js 공식문서](https://kr.vuejs.org)
@@ -543,4 +630,4 @@ app.post('/user/login', (req, res) => {
 
 ## 듣던 강좌
 
-4-12
+4-14

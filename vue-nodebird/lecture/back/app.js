@@ -17,10 +17,12 @@ db.sequelize.sync();
 passportConfig();
 
 app.use(morgan('dev'));
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookie('cookiesecret'));
@@ -32,7 +34,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: false,
-    }
+    },
   }),
 );
 app.use(passport.initialize());
@@ -46,7 +48,6 @@ app.use('/user', userRouter);
 
 app.post('/post', (req, res) => {
   if (req.isAuthenticated()) {
-
   }
 });
 
