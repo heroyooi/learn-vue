@@ -70,12 +70,9 @@ npm run serve
   - Lifecycle hooks
   - Creating a timer
   - Custom events with data
-
-```command
-
-```
+  - Challenge - showing a results component
 
 ## 참고 링크
 
-- [Vue JS 3 Tutorial for Beginners 강좌 | 2:50](https://www.youtube.com/watch?v=bc6czIBLKTg&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1&index=6)
+- [Vue JS 3 Tutorial for Beginners 강좌 | 33:00](https://www.youtube.com/watch?v=bc6czIBLKTg&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1&index=6)
 - [저장소](https://github.com/iamshaunjp/Vue-3-Firebase)
