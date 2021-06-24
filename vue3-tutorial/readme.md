@@ -13,13 +13,25 @@ npm install -g @vue/cli
 yarn global add @vue/cli
 ```
 
+- 프로젝트 만들기 및 실행
+
 ```command
-vue create modal-project
-cd modal-project
+vue create [PROJECT_NAME]
+cd [PROJECT_NAME]
 npm run serve
 ```
 
-## Click event modifiers
+## Modal Project
+
+- 챕터
+  - Props
+  - Emitting custom events
+  - Click event modifiers
+  - Slots
+  - Challenge: creating another modal
+  - Using Teleport
+
+### Click event modifiers
 
 - 우클릭
 
@@ -52,7 +64,18 @@ npm run serve
 </template>
 ```
 
+## Reaction Timer
+
+- 챕터
+  - Lifecycle hooks
+  - Creating a timer
+  - Custom events with data
+
+```command
+
+```
+
 ## 참고 링크
 
-- [Vue JS 3 Tutorial for Beginners 강좌 | 26:54](https://www.youtube.com/watch?v=KM1U6DqZf8M&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1&index=5)
+- [Vue JS 3 Tutorial for Beginners 강좌 | 2:50](https://www.youtube.com/watch?v=bc6czIBLKTg&list=PL4cUxeGkcC9hYYGbV60Vq3IXYNfDk8At1&index=6)
 - [저장소](https://github.com/iamshaunjp/Vue-3-Firebase)
