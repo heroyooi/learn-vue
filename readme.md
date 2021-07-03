@@ -15,4 +15,4 @@ vue create vf2
 - Manually select features
 - Babel, Router, Vuex, Linter
 - ESLint Standard
-- [Vue와 Firebase로 나만의 사이트 만들기 4 vue 프로젝트 만들기](https://www.youtube.com/watch?v=F9K8fcdPFjA&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=5)
+- [Vue와 Firebase로 나만의 사이트 만들기 5](https://www.youtube.com/watch?v=DNX5_px9ulo&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=6)
