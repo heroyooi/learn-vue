@@ -16,4 +16,4 @@ vue create vf2
 - Babel, Router, Vuex, Linter
 - ESLint Standard
 
-- [Vue와 Firebase로 나만의 사이트 만들기 7](https://www.youtube.com/watch?v=nk6Ev2sYz_U&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=8)
+- [Vue와 Firebase로 나만의 사이트 만들기 8](https://www.youtube.com/watch?v=nk6Ev2sYz_U&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=9)
