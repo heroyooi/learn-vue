@@ -101,7 +101,49 @@ export default {
 - Realtime 데이터베이스에 데이터 쓰기
 - 계속 변화를 감지하는 on
 - 한번만 읽는 once
+- set: 통째로 바꾼다.
+- update: 부분만 바꾼다.
+
+## 17. 제목 수정해보기
+
+- 데이터베이스 룰 바꿔보기
+
+- database.rules.json 파일 수정
+```json
+{
+  "rules": {
+    ".read": true,
+    ".write": false
+  }
+}
+```
+
+```command
+firebase deploy --only database
+```
+- 파이어베이스 콘솔에서 직접 규칙을 바꿔줘도 된다.
+
+## 19. 에러 처리하기
+
+- src/error.js 파일 작성
+```js
+import Vue from 'vue'
+
+Vue.config.errorHandler = e => {
+  console.error(e.message)
+}
+```
+- src/main.js 에서 error 파일 연결
+```js
+import './error'
+```
+
+```command
+npm i vuetify-toast-snackbar
+```
+
+- [NPM | vuetify-toast-snackbar](https://www.npmjs.com/package/vuetify-toast-snackbar)
 
 ## 참고링크
 - [Vuetify 공식문서](https://v2.vuetifyjs.com/ko)
-- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 17](https://www.youtube.com/watch?v=lWezhfoopF4&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=18)
+- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 20](https://www.youtube.com/watch?v=vNSDX2oj2es&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=21)
