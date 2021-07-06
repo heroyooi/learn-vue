@@ -125,12 +125,16 @@ firebase deploy --only database
 
 ## 19. 에러 처리하기
 
+- src/plugins/vuetify.js 파일에 스낵바 옵션 정의(NPM 문서대로)
+- [NPM | vuetify-toast-snackbar](https://www.npmjs.com/package/vuetify-toast-snackbar)
+
 - src/error.js 파일 작성
 ```js
 import Vue from 'vue'
 
 Vue.config.errorHandler = e => {
   console.error(e.message)
+  Vue.prototype.$toast.error(e.message)
 }
 ```
 - src/main.js 에서 error 파일 연결
@@ -141,8 +145,6 @@ import './error'
 ```command
 npm i vuetify-toast-snackbar
 ```
-
-- [NPM | vuetify-toast-snackbar](https://www.npmjs.com/package/vuetify-toast-snackbar)
 
 ## 참고링크
 - [Vuetify 공식문서](https://v2.vuetifyjs.com/ko)
