@@ -205,12 +205,22 @@ firebase.auth().onAuthStateChanged((fu) => store.commit('setFireUser', fu))
 
 ## 24. functions로 사용자 저장하기
 
-- [파이어베이스 문서 - Cloud Functions](https://firebase.google.com/docs/functions/use-cases?authuser=0)
+- [파이어베이스 문서 - 인증 - Cloud Functions로 확장](https://firebase.google.com/docs/auth/extend-with-functions?authuser=0)
 
+- 프로젝트 설정 > 서비스 계정 > 새 비공개 키 생성
+- functions/key.json 으로 저장
+
+- 프로젝트 설정 > 서비스 계정 > Admin SDK 구성 스니펫 복사 - Node.js
+- functions/index.js 에 붙여넣기
+
+```command
+firebase deploy --only functions
+```
+- 스파크 요금제에서 블레이즈드 요금제로 업그레이드가 필요
 
 ## 참고 링크
 - [Vuetify 공식문서](https://v2.vuetifyjs.com/ko)
 - [파이어베이스 콘솔](https://console.firebase.google.com)
 - [MDI icons](https://pictogrammers.github.io/@mdi/font/2.0.46)
 - [저장소 vf2](https://github.com/fkkmemi/vf2)
-- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 24 | 2:40](https://www.youtube.com/watch?v=sDz0iYXOq3A&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=25)
+- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 24 functions로 사용자 저장하기 | 12:00](https://www.youtube.com/watch?v=sDz0iYXOq3A&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=25)
