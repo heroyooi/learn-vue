@@ -157,6 +157,52 @@ months.splice(1, 0, 'Feb'); // index 1인 'March' 부터 0 개를 지우고 'Feb
 
 - [파이어베이스 문서 - Google 로그인](https://firebase.google.com/docs/auth/web/google-signin?authuser=0)
 
+- src/store/index.js
+```js
+export default new Vuex.Store({
+  state: {
+    fireUser: null
+  },
+  mutations: {
+    setFireUser (state, fu) {
+      state.fireUser = fu
+    }
+  }
+})
+```
+- 스토어에서 setFireUser를 정의한다.
+
+- src/views/site/sign.vue
+```vue
+<template>
+  <v-menu v-if="$store.state.fireUser">로그인</v-menu>
+  <v-menu v-else>로그아웃</v-menu>
+</template>
+
+<script>
+export default {
+  methods: {
+    async signInWithGoogle () {
+      const provider = new this.$firebase.auth.GoogleAuthProvider()
+      this.$firebase.auth().languageCode = 'ko'
+      try {
+        const sn = await this.$firebase.auth().signInWithPopup(provider)
+        this.$store.commit('setFireUser', sn.user)
+      }
+    },
+    signOut () {
+      this.$firebase.auth().signOut()
+    }
+  }
+}
+</script>
+```
+
+- src/plugins/firebase.js
+```js
+firebase.auth().onAuthStateChanged((fu) => store.commit('setFireUser', fu))
+```
+
 ## 24. functions로 사용자 저장하기
 
 - [파이어베이스 문서 - Cloud Functions](https://firebase.google.com/docs/functions/use-cases?authuser=0)
