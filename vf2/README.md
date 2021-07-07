@@ -146,6 +146,16 @@ import './error'
 npm i vuetify-toast-snackbar
 ```
 
-## 참고링크
+## 22. 메뉴항목 이동시키기
+
+```js
+const months = ['Jan', 'March', 'April', 'June'];
+months.splice(1, 0, 'Feb'); // index 1인 'March' 부터 0 개를 지우고 'Feb'를 넣는다.
+```
+
+## 참고 링크
 - [Vuetify 공식문서](https://v2.vuetifyjs.com/ko)
-- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 20](https://www.youtube.com/watch?v=vNSDX2oj2es&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=21)
+- [파이어베이스 콘솔](https://console.firebase.google.com)
+- [MDI icons](https://pictogrammers.github.io/@mdi/font/2.0.46)
+- [저장소 vf2](https://github.com/fkkmemi/vf2)
+- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 23 로그인 만들기](https://www.youtube.com/watch?v=sDz0iYXOq3A&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=24)
