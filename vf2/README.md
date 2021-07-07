@@ -155,6 +155,11 @@ months.splice(1, 0, 'Feb'); // index 1인 'March' 부터 0 개를 지우고 'Feb
 
 ## 23. 로그인 만들기
 
+- [파이어베이스 문서 - Google 로그인](https://firebase.google.com/docs/auth/web/google-signin?authuser=0)
+
+## 24. functions로 사용자 저장하기
+
+- [파이어베이스 문서 - Cloud Functions](https://firebase.google.com/docs/functions/use-cases?authuser=0)
 
 
 ## 참고 링크
@@ -162,4 +167,4 @@ months.splice(1, 0, 'Feb'); // index 1인 'March' 부터 0 개를 지우고 'Feb
 - [파이어베이스 콘솔](https://console.firebase.google.com)
 - [MDI icons](https://pictogrammers.github.io/@mdi/font/2.0.46)
 - [저장소 vf2](https://github.com/fkkmemi/vf2)
-- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 23 로그인 만들기 | 10:10](https://www.youtube.com/watch?v=sDz0iYXOq3A&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=24)
+- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 24 | 2:40](https://www.youtube.com/watch?v=sDz0iYXOq3A&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=25)
