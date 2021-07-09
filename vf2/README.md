@@ -341,4 +341,4 @@ export default {
 - [파이어베이스 콘솔](https://console.firebase.google.com)
 - [MDI icons](https://pictogrammers.github.io/@mdi/font/2.0.46)
 - [저장소 vf2](https://github.com/fkkmemi/vf2)
-- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 29 페이징처리 개수 기록](https://www.youtube.com/watch?v=zcZProwtaCQ&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=28)
+- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 29 페이징처리 개수 기록 | 3:50](https://www.youtube.com/watch?v=zcZProwtaCQ&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=28)
