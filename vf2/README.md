@@ -262,9 +262,83 @@ firebase deploy --only functions:createUser
 firebase deploy --only database
 ```
 
+## 26, 27 firestore CRUD
+
+```vue
+<script>
+export default {
+  methods: {
+    add () {
+      this.$firebase.firestore().collection('boards').add(this.form)
+      this.dialog = false
+    },
+    update () {
+      this.$firebase.firestore().collection('boards').doc(this.selectedItem.id).update(this.form)
+      this.dialog = false
+    },
+    async read () {
+      const sn = await this.$firebase.firestore().collection('boards').get()
+      this.items = sn.docs.map(v => {
+        const item = v.data()
+        return {
+          id: v.id,
+          title: item.title,
+          content: item.content
+        }
+      })
+      console.log(this.items)
+    },
+    remove (item) {
+      this.$firebase.firestore().collection('boards').doc(item.id).delete()
+    }
+  }
+}
+</script>
+```
+
+## 28 firestore 실시간 읽기
+
+- [Cloud Firestore로 실시간 업데이트 가져오기](https://firebase.google.com/docs/firestore/query-data/listen?authuser=0)
+
+```vue
+<script>
+export default {
+  data () {
+    return {
+      unsubscribe: null
+    }
+  },
+  created () {
+    this.subscribe()
+  },
+  destroyed () {
+    if (this.unsubscribe) this.unsubscribe()
+  },
+  methods: {
+    subscribe () {
+      this.unsubscribe = this.$firebase.firestore().collection('boards').onSnapshot((sn) => {
+        if (sn.empty) {
+          this.items = []
+          return
+        }
+        console.log('here')
+        this.items = sn.docs.map(v => {
+          const item = v.data()
+          return {
+            id: v.id, title: item.title, content: item.content
+          }
+        })
+      })
+    },
+  }
+}
+</script>
+```
+- 컴포넌트가 사라질 때, unsubscribe를 꼭 해주어야 한다.
+
 ## 참고 링크
 - [Vuetify 공식문서](https://v2.vuetifyjs.com/ko)
 - [파이어베이스 콘솔](https://console.firebase.google.com)
 - [MDI icons](https://pictogrammers.github.io/@mdi/font/2.0.46)
 - [저장소 vf2](https://github.com/fkkmemi/vf2)
-- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 26 firestore 쓰고 읽기](https://www.youtube.com/watch?v=zcZProwtaCQ&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=28)
+- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 29 페이징처리 개수 기록](https://www.youtube.com/watch?v=zcZProwtaCQ&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=28)
