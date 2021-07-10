@@ -16,6 +16,10 @@ cd vf2
 npm run serve
 ```
 
+### 추가 설지 Extensions
+
+- Material Design Icons Intellisense
+
 ## 8. vuetify 설치하기
 ```command
 vue add vuetify
