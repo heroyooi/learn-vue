@@ -220,11 +220,129 @@ firebase.auth().onAuthStateChanged((fu) => store.commit('setFireUser', fu))
 ```command
 firebase deploy --only functions
 ```
-- 스파크 요금제에서 블레이즈드 요금제로 업그레이드가 필요
+- 스파크 요금제에서 블레이즈드 요금제로 업그레이드가 필요 => 업그레이드 함(21-07-09)
+
+- [파이어베이스 문서 - Cloud Functions - Cloud Firestore 트리거](https://firebase.google.com/docs/functions/firestore-events?authuser=0)
+
+## 25. 관리자만 수정하기
+
+- [파이어베이스 문서 - Cloud Functions - 환경 구성](https://firebase.google.com/docs/functions/config-env?authuser=0)
+
+```command
+firebase functions:config:set admin.email=heroyooi1018@gmail.com admin.db_url=https://heroyooi-vf2-default-rtdb.firebaseio.com
+```
+- 환경 설정 값 세팅
+
+```command
+firebase functions:config:get
+```
+- 환경 설정 값 확인
+
+```command
+firebase deploy --only functions
+```
+- 환경 설정 값 배포
+
+```command
+firebase deploy --only functions:createUser
+```
+- 함수 하나만 수정한 경우 위와 같이 배포
+
+- [파이어베이스 문서 - 실시간 데이터베이스 - 보안 및 규칙 - 보안 규칙 조건 작성](https://firebase.google.com/docs/database/security/rules-conditions?authuser=0)
+
+- database.rules.json 파일을 아래와 같이 수정
+```json
+{
+  "rules": {
+    ".read": true,
+    // ".write": false
+    "site": {
+      ".write": "root.child('users').child(auth.uid).child('level').val() == 0"
+    }
+  }
+}
+```
+```command
+firebase deploy --only database
+```
+
+## 26, 27 firestore CRUD
+
+```vue
+<script>
+export default {
+  methods: {
+    add () {
+      this.$firebase.firestore().collection('boards').add(this.form)
+      this.dialog = false
+    },
+    update () {
+      this.$firebase.firestore().collection('boards').doc(this.selectedItem.id).update(this.form)
+      this.dialog = false
+    },
+    async read () {
+      const sn = await this.$firebase.firestore().collection('boards').get()
+      this.items = sn.docs.map(v => {
+        const item = v.data()
+        return {
+          id: v.id,
+          title: item.title,
+          content: item.content
+        }
+      })
+      console.log(this.items)
+    },
+    remove (item) {
+      this.$firebase.firestore().collection('boards').doc(item.id).delete()
+    }
+  }
+}
+</script>
+```
+
+## 28 firestore 실시간 읽기
+
+- [Cloud Firestore로 실시간 업데이트 가져오기](https://firebase.google.com/docs/firestore/query-data/listen?authuser=0)
+
+```vue
+<script>
+export default {
+  data () {
+    return {
+      unsubscribe: null
+    }
+  },
+  created () {
+    this.subscribe()
+  },
+  destroyed () {
+    if (this.unsubscribe) this.unsubscribe()
+  },
+  methods: {
+    subscribe () {
+      this.unsubscribe = this.$firebase.firestore().collection('boards').onSnapshot((sn) => {
+        if (sn.empty) {
+          this.items = []
+          return
+        }
+        console.log('here')
+        this.items = sn.docs.map(v => {
+          const item = v.data()
+          return {
+            id: v.id, title: item.title, content: item.content
+          }
+        })
+      })
+    },
+  }
+}
+</script>
+```
+- 컴포넌트가 사라질 때, unsubscribe를 꼭 해주어야 한다.
 
 ## 참고 링크
 - [Vuetify 공식문서](https://v2.vuetifyjs.com/ko)
 - [파이어베이스 콘솔](https://console.firebase.google.com)
 - [MDI icons](https://pictogrammers.github.io/@mdi/font/2.0.46)
 - [저장소 vf2](https://github.com/fkkmemi/vf2)
-- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 24 functions로 사용자 저장하기 | 12:00](https://www.youtube.com/watch?v=sDz0iYXOq3A&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=25)
+- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 29 페이징처리 개수 기록 | 3:50](https://www.youtube.com/watch?v=zcZProwtaCQ&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=28)
