@@ -352,4 +352,4 @@ firebase deploy --only functions:decrementBoardCount
 - [파이어베이스 콘솔](https://console.firebase.google.com)
 - [MDI icons](https://pictogrammers.github.io/@mdi/font/2.0.46)
 - [저장소 vf2](https://github.com/fkkmemi/vf2)
-- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 30 페이징 개수 제한하기](https://www.youtube.com/watch?v=cF19e0Mgoko&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=31)
+- [강좌 | Vue와 Firebase로 나만의 사이트 만들기 31 작성일 넣기](https://www.youtube.com/watch?v=i2wbmdSbzeU&list=PLjpTKic1SLZsWckh_DZ6tYH17MM6hBAc7&index=32)

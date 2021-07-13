@@ -5,10 +5,15 @@
       :headers="headers"
       :items="items"
       :items-per-page="5"
+      :options.sync="options"
+      :server-items-length="serverItemsLength"
     >
       <template v-slot:item.id="{ item }">
         <v-btn icon @click="openDialog(item)"><v-icon>mdi-pencil</v-icon></v-btn>
         <v-btn icon @click="remove(item)"><v-icon>mdi-delete</v-icon></v-btn>
+      </template>
+      <template v-slot:item.createdAt="{ item }">
+        {{item.createdAt.toLcaleString()}}
       </template>
     </v-data-table>
     <v-card-actions>
@@ -37,6 +42,7 @@ export default {
   data () {
     return {
       headers: [
+        { value: 'createdAt', text: '작성일' },
         { value: 'title', text: '제목' },
         { value: 'content', text: '내용' },
         { value: 'id', text: 'id' }
@@ -48,19 +54,36 @@ export default {
       },
       dialog: false,
       selectedItem: null,
-      unsubscribe: null
+      unsubscribe: null,
+      unsubscribeCount: null,
+      serverItemsLength: 0,
+      options: {}
+    }
+  },
+  watch: {
+    options: {
+      handler (n, o) {
+        console.log(o)
+        console.log(n)
+        this.subscribe()
+      },
+      deep: true
     }
   },
   created () {
     // this.read()
-    this.subscribe()
   },
   destroyed () {
     if (this.unsubscribe) this.unsubscribe()
+    if (this.unsubscribeCount) this.unsubscribeCount()
   },
   methods: {
     subscribe () {
-      this.unsubscribe = this.$firebase.firestore().collection('boards').onSnapshot((sn) => {
+      this.unsubscribeCount = this.$firebase.firestore().collection('meta').doc('boards').onSnapshot((doc) => {
+        if (!doc.exists) return
+        this.serverItemsLength = doc.data().count
+      })
+      this.unsubscribe = this.$firebase.firestore().collection('boards').limit(this.options.itemsPerPage).onSnapshot((sn) => {
         if (sn.empty) {
           this.items = []
           return
@@ -69,7 +92,7 @@ export default {
         this.items = sn.docs.map(v => {
           const item = v.data()
           return {
-            id: v.id, title: item.title, content: item.content
+            id: v.id, title: item.title, content: item.content, createdAt: item.createdAt.toDate()
           }
         })
       })
@@ -86,7 +109,10 @@ export default {
       }
     },
     add () {
-      this.$firebase.firestore().collection('boards').add(this.form)
+      const item = {}
+      Object.assign(item, this.form)
+      item.createdAt = new Date()
+      this.$firebase.firestore().collection('boards').add(item)
       this.dialog = false
     },
     update () {
